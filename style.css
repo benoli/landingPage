@@ -1,0 +1,36 @@
+
+html { 
+    background: url(images/fondo_tapa.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+.logo {
+    width:30%;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+}
+.main-box{
+    border: 1vh solid #0052a0;
+    margin: auto;
+    width: 70%;
+    height: 500px;
+    border-radius: 3rem;
+}
+
+/* Template gradient */
+
+.download_app_area {
+    background-image: -moz-linear-gradient(0deg, #2b56ff 0%, #7249fb 100%);
+    background-image: -webkit-linear-gradient(0deg, #2b56ff 0%, #7249fb 100%);
+    background-image: -ms-linear-gradient(0deg, #2b56ff 0%, #7249fb 100%);
+}
