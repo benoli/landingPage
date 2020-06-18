@@ -4131,3 +4131,12 @@ h6 {
 .app_btn_area h3{
   color: #c3c3c3;
 }
+
+.img-video {
+  max-width: 100%;
+  height: 30rem;
+}
+
+.font-green{
+  color:#16c292;
+}

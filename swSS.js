@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const cacheName = 'v1.0';
+const cacheName = 'v1.6';
 // const resourcesToPrecache = [
 //     '/',
 //     'index.html'
@@ -47,33 +47,42 @@ self.addEventListener('activate', e => {
     );
 });
 
-// // REturn resources from cache
-// self.addEventListener('fetch', event => {
-//     event.respondWith(caches.match(event.request)
-//       .then(cachedResponse => {
-//         return cachedResponse || fetch(event.request);
-//       })
-//       .catch(err => console.log('Error => ' + err)
-//       )
-//     );
-// });
-
-// CAll fetch event
-
-self.addEventListener('fetch', e => {
-    console.log('SW fetching');
-    
-    e.respondWith(
-        fetch(e.request)
+// Return resources from cache first. If doesn't find it go to fetch. // WARNING this aproach is only for a very static site
+self.addEventListener('fetch', event => {
+    event.respondWith(caches.match(event.request)
+      .then(cachedResponse => {
+        return cachedResponse;})
+      .catch(fetch(event.request)
         .then(res => {
             const resClone = res.clone();
             caches
             .open(cacheName)
             .then(cache => {
-                cache.put(e.request, resClone);
-            });
-        return res;
+                cache.put(event.request, resClone);
+            })
+            .then(res => {return res;})
+            .catch(err => console.log('Error => ' + err)
+            );
         })
-        .catch(err=> caches.match(e.request).then(res => res))
+      )
     );
 });
+// // CAll fetch event
+
+// self.addEventListener('fetch', event => {
+//     console.log('SW fetching');
+    
+//     event.respondWith(
+//         fetch(event.request)
+//         .then(res => {
+//             const resClone = res.clone();
+//             caches
+//             .open(cacheName)
+//             .then(cache => {
+//                 cache.put(event.request, resClone);
+//             });
+//         return res;
+//         })
+//         .catch(err=> caches.match(event.request).then(res => res))
+//     );
+// });
