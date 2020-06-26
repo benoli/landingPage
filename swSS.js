@@ -1,8 +1,46 @@
 /*jshint esversion: 6 */
-const cacheName = 'v1.6';
+const cacheName = 'v1.0';
 // const resourcesToPrecache = [
-//     '/',
-//     'index.html'
+// 	"/css/bootstrap.css",
+//     "/css/font-awesome.min.css",
+//     "/css/responsive.css",
+//     "/css/style.css",
+//     "/fonts/fontawesome-webfont.woff2?v=4.5.0",
+//     "/img/banner/home-banner.png",
+//     "/img/banner/right-mobile2.png",
+//     "/img/favicon.png",
+//     "/img/icon/f-icon-1.png",
+//     "/img/video-for-doctors.png",
+//     "/img/video-for-patients.png",
+//     "/index.html",
+//     "/js/bootstrap.min.js",
+//     "/js/jquery-3.2.1.min.js",
+//     "/js/jquery.ajaxchimp.min.js",
+//     "/js/mail-script.js",
+//     "/js/popper.js",
+//     "/js/stellar.js",
+//     "/js/theme.js",
+//     "/swSS.js",
+//     "/vendors/animate-css/animate.css",
+//     "/vendors/counter-up/jquery.counterup.js",
+//     "/vendors/counter-up/jquery.waypoints.min.js",
+//     "/vendors/isotope/imagesloaded.pkgd.min.js",
+//     "/vendors/isotope/isotope-min.js",
+//     "/vendors/lightbox/simpleLightbox.css",
+//     "/vendors/lightbox/simpleLightbox.min.js",
+//     "/vendors/linericon/style.css",
+//     "/vendors/nice-select/css/nice-select.css",
+//     "/vendors/nice-select/js/jquery.nice-select.min.js",
+//     "/vendors/owl-carousel/owl.carousel.min.css",
+//     "/vendors/owl-carousel/owl.carousel.min.js",
+//     "/vendors/popup/jquery.magnific-popup.min.js",
+//     "/vendors/popup/magnific-popup.css",
+//     "/css?family=Open+Sans:400,600,700|Roboto:300,300i,400,500,700",
+//     "/s/opensans/v17/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.woff2",
+//     "/s/opensans/v17/mem5YaGs126MiZpBA-UNirkOUuhpKKSTjw.woff2",
+//     "/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2",
+//     "/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+//     "/intranet/assets/images/logo.png"
 
 // ];
 
@@ -51,8 +89,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', event => {
     event.respondWith(caches.match(event.request)
       .then(cachedResponse => {
-        return cachedResponse;})
-      .catch(fetch(event.request)
+        return cachedResponse || fetch(event.request)
         .then(res => {
             const resClone = res.clone();
             caches
@@ -60,10 +97,13 @@ self.addEventListener('fetch', event => {
             .then(cache => {
                 cache.put(event.request, resClone);
             })
-            .then(res => {return res;})
             .catch(err => console.log('Error => ' + err)
             );
-        })
+            return res;
+        });
+    
+      })
+      .catch(err => console.log('Error => ' + err)
       )
     );
 });
