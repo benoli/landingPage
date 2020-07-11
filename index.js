@@ -1,12 +1,15 @@
 /*jshint esversion: 6 */
-window.addEventListener('load', () => {
-    navigator.serviceWorker.register('swSS.js', { scope: '/' })
-    .then( reg => {
-        console.log('Service Worker: Register ok', reg);
-    }).catch( err => {
-        console.log('Registration failed', err);
+if (navigator.serviceWorker) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('swSS.js', { scope: '/' })
+        .then( reg => {
+            console.log('Service Worker: Register ok', reg);
+        }).catch( err => {
+            console.log('Registration failed', err);
+        });
     });
-});
+    
+}
 
 window.addEventListener('online', () => {console.log('You are online');}
 );

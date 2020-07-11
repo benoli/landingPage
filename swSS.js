@@ -44,17 +44,17 @@ const cacheName = 'v1.5';
 
 // ];
 
-if (navigator.serviceWorker) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('swSS.js', { scope: '/' })
-        .then( reg => {
-            console.log('Service Worker: Register ok', reg);
-        }).catch( err => {
-            console.log('Registration failed', err);
-        });
-    });
+// if (navigator.serviceWorker) {
+//     window.addEventListener('load', () => {
+//         navigator.serviceWorker.register('swSS.js', { scope: '/' })
+//         .then( reg => {
+//             console.log('Service Worker: Register ok', reg);
+//         }).catch( err => {
+//             console.log('Registration failed', err);
+//         });
+//     });
     
-}
+// }
 
 // Save resources on cache
 self.addEventListener('install', event => {
