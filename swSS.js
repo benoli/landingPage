@@ -1,5 +1,5 @@
-/*jshint esversion: 6 */
-const cacheName = 'v1.0';
+/*jshint esversion: 8 */
+const cacheName = 'v1.5';
 // const resourcesToPrecache = [
 // 	"/css/bootstrap.css",
 //     "/css/font-awesome.min.css",
@@ -59,6 +59,7 @@ if (navigator.serviceWorker) {
 // Save resources on cache
 self.addEventListener('install', event => {
     console.log('Service Worker: Install event');
+    self.skipWaiting(); // This should only be employed when you are certain the new service worker will not break any existing clients
     // event.waitUntil(
     //     caches.open(cacheName)
     //       .then( cache => {
@@ -106,6 +107,31 @@ self.addEventListener('fetch', event => {
       .catch(err => console.log('Error => ' + err)
       )
     );
+    event.waitUntil(async function() {
+        // Exit early if we don't have access to the client.
+        // Eg, if it's cross-origin.
+        if (!event.clientId) return;
+    
+        // Get the client.
+        const client = await clients.get(event.clientId);
+        // Exit early if we don't get the client.
+        // Eg, if it closed.
+        if (!client) return;
+    
+        // Send a message to the client.
+        client.postMessage({
+          msg: "Hey I just got a fetch from you!",
+          url: event.request.url
+        });
+       
+      }());
+});
+
+self.addEventListener('sync', e => {
+    console.log(e);
+    console.log('This is a sync event');
+    
+    
 });
 // // CAll fetch event
 
